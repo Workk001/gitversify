@@ -28,5 +28,6 @@ export async function GET(request) {
         path: '/',
     })
 
-    return Response.redirect(new URL('/dashboard', request.url))
+    const baseUrl = request.url.split('?')[0].replace('/api/auth/callback', '')
+    return Response.redirect(`${baseUrl}/dashboard`)
 }
