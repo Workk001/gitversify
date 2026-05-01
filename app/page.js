@@ -1,39 +1,54 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <main style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '24px',
-      padding: '40px',
-    }}>
+    <main className="landing-page">
+      <nav className="shell nav">
+        <Link className="brand" href="/">
+          <span className="brand-mark">S</span>
+          shiplog
+        </Link>
+        <a className="nav-link" href="/api/auth/github">
+          Connect GitHub
+        </a>
+      </nav>
 
-      <h1 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-1px' }}>
-        shiplog
-      </h1>
+      <section className="shell hero">
+        <div className="hero-copy">
+          <p className="eyebrow">Release notes without the blank page</p>
+          <h1>Turn commits into changelogs that are ready to ship.</h1>
+          <p className="hero-text">
+            Connect GitHub, choose a repo, generate a clean changelog, edit it,
+            and publish it as a GitHub release.
+          </p>
 
-      <p style={{ fontSize: '18px', color: '#888', textAlign: 'center', maxWidth: '420px', lineHeight: '1.6' }}>
-        Connect your GitHub. Every release tag automatically becomes a human-readable changelog.
-      </p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="/api/auth/github">
+              Login with GitHub
+            </a>
+            <span className="microcopy">
+              Free for 3 repos. No credit card needed.
+            </span>
+          </div>
+        </div>
 
-      <a href="/api/auth/github" style={{
-        background: '#fff',
-        color: '#000',
-        padding: '12px 28px',
-        borderRadius: '8px',
-        fontWeight: '600',
-        fontSize: '15px',
-        textDecoration: 'none',
-      }}>
-        Login with GitHub
-      </a>
-
-      <p style={{ fontSize: '13px', color: '#555' }}>
-        Free for 3 repos. No credit card needed.
-      </p>
-
+        <div className="hero-panel" aria-label="Changelog preview">
+          <div className="panel-topbar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div className="preview-card">
+            <p className="preview-label">v1.4.0</p>
+            <h2>What&apos;s New</h2>
+            <ul>
+              <li>Added repository-based release generation.</li>
+              <li>Improved changelog wording for non-technical readers.</li>
+              <li>Fixed missing context in generated release notes.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
     </main>
-  )
+  );
 }

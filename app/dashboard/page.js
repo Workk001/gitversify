@@ -31,60 +31,61 @@ export default async function Dashboard() {
     const repos = await getGithubRepos(token)
 
     return (
-        <main style={{
-            minHeight: '100vh',
-            background: '#0a0a0a',
-            color: '#ededed',
-            fontFamily: 'sans-serif',
-            padding: '40px',
-        }}>
+        <main className="app-page">
+            <section className="shell dashboard-shell">
+                <header className="dashboard-header">
+                    <a className="brand" href="/dashboard">
+                        <span className="brand-mark">S</span>
+                        shiplog
+                    </a>
 
-            {/* User profile */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '40px' }}>
-                <img
-                    src={user.avatar_url}
-                    alt={user.login}
-                    style={{ width: '48px', height: '48px', borderRadius: '50%' }}
-                />
-                <div>
-                    <div style={{ fontWeight: '600', fontSize: '16px' }}>{user.name}</div>
-                    <div style={{ color: '#888', fontSize: '14px' }}>@{user.login}</div>
-                </div>
-            </div>
-
-            {/* Repos list */}
-            <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '20px' }}>
-                Your Repositories
-            </h2>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '600px' }}>
-                {repos.map(repo => (
-                    <a
-                    key = { repo.id }
-            href = {`/dashboard/repo?owner=${repo.owner.login}&repo=${repo.name}`}
-                style={{
-                    background: '#111',
-                    border: '1px solid #222',
-                    borderRadius: '8px',
-                    padding: '16px 20px',
-                    textDecoration: 'none',
-                    color: '#ededed',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                }}
-          >
-                <div>
-                    <div style={{ fontWeight: '500', marginBottom: '4px' }}>{repo.name}</div>
-                    <div style={{ color: '#888', fontSize: '13px' }}>
-                        {repo.description || 'No description'}
+                    <div className="user-pill">
+                        {/* GitHub avatars are already optimized and sized by GitHub. */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={user.avatar_url}
+                            alt={user.login}
+                            className="avatar"
+                        />
+                        <div>
+                            <div className="user-name">{user.name || user.login}</div>
+                            <div className="muted">@{user.login}</div>
+                        </div>
                     </div>
-                </div>
-                <div style={{ color: '#555', fontSize: '13px' }}>→</div>
-            </a>
-        ))}
-        </div>
+                </header>
 
-    </main >
-  )
+                <div className="section-heading">
+                    <p className="eyebrow">Connected workspace</p>
+                    <h1>Your repositories</h1>
+                    <p className="section-copy">
+                        Pick a repository to generate release notes from its recent commits.
+                    </p>
+                </div>
+
+                <div className="repo-list">
+                    {repos.map(repo => (
+                        <a
+                            key={repo.id}
+                            href={`/dashboard/repo?owner=${repo.owner.login}&repo=${repo.name}`}
+                            className="repo-row"
+                        >
+                            <div>
+                                <div className="repo-title">{repo.name}</div>
+                                <div className="repo-description">
+                                    {repo.description || 'No description provided'}
+                                </div>
+                            </div>
+                            <span className="row-arrow">-&gt;</span>
+                        </a>
+                    ))}
+                    {repos.length === 0 && (
+                        <div className="empty-state">
+                            <h2>No repositories found</h2>
+                            <p>GitHub did not return any repositories for this account.</p>
+                        </div>
+                    )}
+                </div>
+            </section>
+        </main>
+    )
 }
