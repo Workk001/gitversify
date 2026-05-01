@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers'
 
 export async function GET(request) {
-    const code = new URL(request.url).searchParams.get('code')
+    const url = new URL(request.url)
+    const code = url.searchParams.get('code')
 
     const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
@@ -19,15 +20,15 @@ export async function GET(request) {
     const tokenData = await tokenRes.json()
     const accessToken = tokenData.access_token
 
-    // Store token in a secure cookie instead of the URL
     const cookieStore = await cookies()
     cookieStore.set('github_token', accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+        maxAge: 60 * 60 * 24 * 30,
         path: '/',
     })
 
-    const baseUrl = request.url.split('?')[0].replace('/api/auth/callback', '')
-    return Response.redirect(`${baseUrl}/dashboard`)
+    // Build a clean redirect URL with no query params
+    const cleanRedirect = `${url.protocol}//${url.host}/dashboard`
+    return Response.redirect(cleanRedirect)
 }
