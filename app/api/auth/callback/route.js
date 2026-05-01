@@ -30,5 +30,5 @@ export async function GET(request) {
 
     // Build a clean redirect URL with no query params
     const cleanRedirect = `${url.protocol}//${url.host}/dashboard`
-    return Response.redirect(cleanRedirect)
+    return Response.redirect(cleanRedirect, 302)
 }
