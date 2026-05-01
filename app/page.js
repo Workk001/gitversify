@@ -6,7 +6,7 @@ export default function Home() {
       <nav className="shell nav">
         <Link className="brand" href="/">
           <span className="brand-mark">S</span>
-          shiplog
+          Shipnotes
         </Link>
         <a className="nav-link" href="/api/auth/github">
           Connect GitHub

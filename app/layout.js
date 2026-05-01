@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "shiplog",
+  title: "Shipnotes",
   description: "Generate and publish GitHub changelogs from recent commits.",
 };
 
