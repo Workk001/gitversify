@@ -35,8 +35,8 @@ export default async function Dashboard() {
             <section className="shell dashboard-shell">
                 <header className="dashboard-header">
                     <a className="brand" href="/dashboard">
-                        <span className="brand-mark">S</span>
-                        shiplog
+                        <span className="brand-mark">G</span>
+                        GitVersify
                     </a>
 
                     <div className="user-pill">

@@ -5,8 +5,8 @@ export default function Home() {
     <main className="landing-page">
       <nav className="shell nav">
         <Link className="brand" href="/">
-          <span className="brand-mark">S</span>
-          Shipnotes
+          <span className="brand-mark">G</span>
+          GitVersify
         </Link>
         <a className="nav-link" href="/api/auth/github">
           Connect GitHub
@@ -15,11 +15,11 @@ export default function Home() {
 
       <section className="shell hero">
         <div className="hero-copy">
-          <p className="eyebrow">Release notes without the blank page</p>
-          <h1>Turn commits into changelogs that are ready to ship.</h1>
+          <p className="eyebrow">AI-powered changelogs for GitHub</p>
+          <h1>Turn messy commits into clean release notes.</h1>
           <p className="hero-text">
-            Connect GitHub, choose a repo, generate a clean changelog, edit it,
-            and publish it as a GitHub release.
+            GitVersify reads your commits since the last release, writes a clean
+            grouped changelog, and publishes it directly to GitHub.
           </p>
 
           <div className="hero-actions">
@@ -39,7 +39,7 @@ export default function Home() {
             <span></span>
           </div>
           <div className="preview-card">
-            <p className="preview-label">v1.4.0</p>
+            <p className="preview-label">GitVersify preview</p>
             <h2>What&apos;s New</h2>
             <ul>
               <li>Added repository-based release generation.</li>
