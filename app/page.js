@@ -16,7 +16,10 @@ export default function Home() {
           <span className="brand-mark">G</span>
           GitVersify
         </Link>
-        <div className="nav-coordinates">clear release notes from real commits</div>
+        <div className="nav-section-links" aria-label="Page sections">
+          <a href="#before-after">Before / after</a>
+          <a href="#how-it-works">How it works</a>
+        </div>
         <a className="nav-link" href="/api/auth/github">
           Connect GitHub
         </a>
@@ -50,7 +53,7 @@ export default function Home() {
         </aside>
       </section>
 
-      <section className="shell compare-section reveal-block">
+      <section id="before-after" className="shell compare-section reveal-block">
         <article className="compare-panel before-panel">
           <p className="eyebrow">Before</p>
           <h2>Manual release notes slow the team down.</h2>
@@ -74,7 +77,7 @@ export default function Home() {
         </article>
       </section>
 
-      <section className="shell flow-section reveal-block">
+      <section id="how-it-works" className="shell flow-section reveal-block">
         <div className="section-kicker compact">
           <p className="eyebrow">How it works</p>
           <h2>Five steps. No extra workspace.</h2>

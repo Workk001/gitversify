@@ -143,6 +143,7 @@ button {
 }
 
 .nav-coordinates,
+.nav-section-links,
 .microcopy,
 .helper-text,
 .muted,
@@ -157,6 +158,31 @@ button {
 .nav-coordinates {
   justify-self: center;
   text-align: center;
+}
+
+.nav-section-links {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid var(--line);
+  background: rgba(255, 253, 244, 0.72);
+  padding: 4px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.nav-section-links a {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  padding: 0 10px;
+  color: var(--ink);
+  transition: background 260ms var(--ease), transform 260ms var(--ease);
+}
+
+.nav-section-links a:hover {
+  background: var(--accent-soft);
+  transform: translateY(-1px);
 }
 
 .nav-link,
@@ -971,6 +997,10 @@ button {
     text-align: left;
   }
 
+  .nav-section-links {
+    justify-self: start;
+  }
+
   .simple-hero {
     align-items: start;
     padding: 56px 0 74px;
@@ -1049,5 +1079,16 @@ button {
   .footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .nav-section-links {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-section-links a {
+    flex: 1;
+    justify-content: center;
+    padding-inline: 8px;
   }
 }
