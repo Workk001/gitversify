@@ -113,11 +113,11 @@ export default function RepoClient({ commits, releases, owner, repo }) {
 
                 <header className="repo-header">
                     <div>
-                        <p className="eyebrow">Release control room</p>
+                        <p className="eyebrow">Step 2</p>
                         <h1>{owner}/{repo}</h1>
                         <p className="section-copy">
-                            Review the change set, generate a human-readable draft, then
-                            publish it back to GitHub when the wording is ready.
+                            Choose the commit range, generate the draft, review the
+                            wording, then publish the release.
                         </p>
                     </div>
                     <div className="status-pill">
@@ -126,9 +126,9 @@ export default function RepoClient({ commits, releases, owner, repo }) {
                 </header>
 
                 <div className="release-steps brutal-card" aria-label="Release generation steps">
-                    <div className="step is-complete"><span>1</span>Repo connected</div>
-                    <div className="step is-active"><span>2</span>Select range</div>
-                    <div className={`step ${changelog ? 'is-complete' : ''}`}><span>3</span>Draft notes</div>
+                    <div className="step is-complete"><span>1</span>Repo</div>
+                    <div className="step is-active"><span>2</span>Range</div>
+                    <div className={`step ${changelog ? 'is-complete' : ''}`}><span>3</span>Draft</div>
                     <div className={`step ${published ? 'is-complete' : ''}`}><span>4</span>Publish</div>
                 </div>
 
@@ -137,7 +137,7 @@ export default function RepoClient({ commits, releases, owner, repo }) {
                         <div className="panel-heading stacked">
                             <div>
                                 <h2>Release range</h2>
-                                <p>Choose how far back the changelog should read.</p>
+                                <p>Choose what commits GitVersify should read.</p>
                             </div>
                         </div>
 
@@ -162,7 +162,7 @@ export default function RepoClient({ commits, releases, owner, repo }) {
                                 disabled={loading || loadingCommits || activeCommits.length === 0}
                                 className="button button-primary full-width"
                             >
-                                {loading ? 'Writing draft...' : 'Generate changelog ->'}
+                                {loading ? 'Writing draft...' : 'Generate draft ->'}
                             </button>
                         )}
 
@@ -173,7 +173,7 @@ export default function RepoClient({ commits, releases, owner, repo }) {
                         <div className="panel-heading">
                             <div>
                                 <h2>Change set</h2>
-                                <p>{loadingCommits ? 'Loading commits...' : `${activeCommits.length} selected for generation`}</p>
+                                <p>{loadingCommits ? 'Loading commits...' : `${activeCommits.length} commits selected`}</p>
                             </div>
                         </div>
 
@@ -204,7 +204,7 @@ export default function RepoClient({ commits, releases, owner, repo }) {
                         <div className="panel-heading editor-heading">
                             <div>
                                 <h2>Release draft</h2>
-                                <p>Keep the language user-facing, then publish it as a GitHub release.</p>
+                                <p>Edit the language before publishing.</p>
                             </div>
                             <button
                                 onClick={generateChangelog}

@@ -38,7 +38,7 @@ export default async function Dashboard() {
                         <span className="brand-mark">G</span>
                         GitVersify
                     </a>
-                    <div className="nav-coordinates">CONNECTED WORKSPACE</div>
+                    <div className="nav-coordinates">choose repo -&gt; generate release notes</div>
 
                     <div className="user-pill">
                         {/* GitHub avatars are already optimized and sized by GitHub. */}
@@ -57,21 +57,21 @@ export default async function Dashboard() {
 
                 <div className="dashboard-intro">
                     <div className="section-heading">
-                        <p className="eyebrow">Pick the source of truth</p>
-                        <h1>Choose the repository. The release story starts there.</h1>
+                        <p className="eyebrow">Step 1</p>
+                        <h1>Choose a repository.</h1>
                         <p className="section-copy">
-                            Start with a repository. GitVersify will read recent commits,
-                            compare them against your releases, and prepare the next changelog.
+                            Pick the project you want release notes for. The next screen
+                            lets you choose the release range and generate a draft.
                         </p>
                     </div>
 
                     <div className="workflow-card brutal-card" aria-label="Release workflow">
-                        <p className="workflow-label">Release machine</p>
+                        <p className="workflow-label">Flow</p>
                         <ol>
-                            <li><span>1</span>Repository</li>
-                            <li><span>2</span>Release range</li>
-                            <li><span>3</span>Changelog draft</li>
-                            <li><span>4</span>GitHub release</li>
+                            <li className="is-active"><span>1</span>Repository</li>
+                            <li><span>2</span>Range</li>
+                            <li><span>3</span>Draft</li>
+                            <li><span>4</span>Publish</li>
                         </ol>
                     </div>
                 </div>
