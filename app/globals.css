@@ -525,10 +525,10 @@ button {
 
 .dashboard-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 310px;
-  gap: 28px;
-  align-items: end;
-  margin: 72px 0 30px;
+  grid-template-columns: minmax(0, 0.98fr) minmax(300px, 0.42fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+  margin: 72px 0 38px;
 }
 
 .section-heading {
@@ -537,6 +537,8 @@ button {
 
 .workflow-card {
   padding: 18px;
+  align-self: start;
+  width: 100%;
 }
 
 .workflow-card ol {
@@ -550,7 +552,8 @@ button {
   align-items: center;
   gap: 12px;
   border-top: 2px solid var(--line);
-  padding: 12px 0;
+  min-height: 54px;
+  padding: 10px 0;
 }
 
 .workflow-card li.is-active {
@@ -673,14 +676,14 @@ button {
 .release-steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   overflow: hidden;
 }
 
 .step {
-  min-height: 96px;
+  min-height: 82px;
   border-right: 2px solid var(--line);
-  padding: 16px;
+  padding: 14px 16px;
 }
 
 .step:last-child {
