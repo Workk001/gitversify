@@ -31,7 +31,7 @@ export default async function Dashboard() {
     const repos = await getGithubRepos(token)
 
     return (
-        <main className="app-page">
+        <main id="main-content" className="app-page">
             <section className="shell dashboard-shell">
                 <header className="dashboard-header">
                     <a className="brand" href="/dashboard">

@@ -19,6 +19,7 @@ export default function RepoClient({ commits, releases, owner, repo }) {
         setBaseTag(newTag)
         setChangelog(null)
         setPublished(null)
+        setError(null)
 
         if (!newTag) {
             setActiveCommits(commits)
@@ -27,10 +28,16 @@ export default function RepoClient({ commits, releases, owner, repo }) {
 
         setLoadingCommits(true)
         try {
-            const res = await fetch(
-                `/api/commits?owner=${owner}&repo=${repo}&base=${newTag}`
-            )
+            const params = new URLSearchParams({ owner, repo, base: newTag })
+            const res = await fetch(`/api/commits?${params}`)
             const data = await res.json()
+
+            if (!res.ok || data.error) {
+                setActiveCommits([])
+                setError(data.error || 'Could not fetch commits for that tag.')
+                return
+            }
+
             setActiveCommits(data.commits)
         } catch (e) {
             setError('Could not fetch commits for that tag.')
@@ -58,6 +65,12 @@ export default function RepoClient({ commits, releases, owner, repo }) {
             })
 
             const data = await res.json()
+
+            if (!res.ok || data.error) {
+                setError(data.error || 'Could not generate the changelog.')
+                return
+            }
+
             setChangelog(data.changelog)
             setEditedChangelog(data.changelog)
         } catch (err) {
@@ -70,12 +83,13 @@ export default function RepoClient({ commits, releases, owner, repo }) {
     async function publishRelease() {
         setPublishing(true)
         setError(null)
+        const cleanTagName = tagName.trim()
 
         try {
             const res = await fetch('/api/publish', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ owner, repo, tagName, changelog: editedChangelog }),
+                body: JSON.stringify({ owner, repo, tagName: cleanTagName, changelog: editedChangelog }),
             })
 
             const data = await res.json()
@@ -93,7 +107,7 @@ export default function RepoClient({ commits, releases, owner, repo }) {
     }
 
     return (
-        <main className="app-page">
+        <main id="main-content" className="app-page">
             <section className="shell repo-shell">
                 <a href="/dashboard" className="back-link">&lt;- Back to repositories</a>
 
@@ -217,7 +231,7 @@ export default function RepoClient({ commits, releases, owner, repo }) {
                             />
                             <button
                                 onClick={publishRelease}
-                                disabled={publishing || !tagName}
+                                disabled={publishing || !tagName.trim()}
                                 className="button button-success"
                             >
                                 {publishing ? 'Publishing...' : 'Publish release ->'}

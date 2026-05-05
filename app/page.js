@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="landing-page">
+    <main id="main-content" className="landing-page">
       <nav className="shell nav brutal-nav">
         <Link className="brand" href="/">
           <span className="brand-mark">G</span>
@@ -150,6 +150,19 @@ export default function Home() {
           <span className="button-mark">-&gt;</span>
         </a>
       </section>
+
+      <footer className="shell footer">
+        <Link className="brand" href="/">
+          <span className="brand-mark">G</span>
+          GitVersify
+        </Link>
+        <div className="footer-links">
+          <a href="/api/auth/github">Connect GitHub</a>
+          <a href="mailto:support@gitversify.dev">Support</a>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+        </div>
+      </footer>
     </main>
   );
 }
