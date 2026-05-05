@@ -833,6 +833,14 @@ button {
   margin-top: 20px;
 }
 
+.editor-panel {
+  scroll-margin-top: 28px;
+}
+
+.editor-panel:focus {
+  outline: none;
+}
+
 .editor-heading {
   align-items: center;
 }

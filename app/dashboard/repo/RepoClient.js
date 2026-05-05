@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function RepoClient({ commits, releases, owner, repo }) {
     const hasReleases = releases && releases.length > 0
@@ -14,6 +14,21 @@ export default function RepoClient({ commits, releases, owner, repo }) {
     const [error, setError] = useState(null)
     const [tagName, setTagName] = useState('')
     const [editedChangelog, setEditedChangelog] = useState(null)
+    const draftPanelRef = useRef(null)
+
+    useEffect(() => {
+        if (!changelog || published) return
+
+        const frame = requestAnimationFrame(() => {
+            draftPanelRef.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            })
+            draftPanelRef.current?.focus({ preventScroll: true })
+        })
+
+        return () => cancelAnimationFrame(frame)
+    }, [changelog, published])
 
     async function handleBaseTagChange(newTag) {
         setBaseTag(newTag)
@@ -200,7 +215,11 @@ export default function RepoClient({ commits, releases, owner, repo }) {
                 </div>
 
                 {changelog && !published && (
-                    <section className="editor-panel brutal-card">
+                    <section
+                        ref={draftPanelRef}
+                        tabIndex={-1}
+                        className="editor-panel brutal-card"
+                    >
                         <div className="panel-heading editor-heading">
                             <div>
                                 <h2>Release draft</h2>
