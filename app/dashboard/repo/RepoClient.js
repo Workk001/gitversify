@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-export default function RepoClient({ commits, releases, owner, repo, token }) {
+export default function RepoClient({ commits, releases, owner, repo }) {
     const hasReleases = releases && releases.length > 0
     const [baseTag, setBaseTag] = useState(hasReleases ? releases[0].tag_name : '')
     const [activeCommits, setActiveCommits] = useState(commits)
@@ -99,16 +99,34 @@ export default function RepoClient({ commits, releases, owner, repo, token }) {
 
                 <header className="repo-header">
                     <div>
-                        <p className="eyebrow">Release workspace</p>
+                        <p className="eyebrow">Release control room</p>
                         <h1>{owner}/{repo}</h1>
+                        <p className="section-copy">
+                            Review the change set, generate a human-readable draft, then
+                            publish it back to GitHub when the wording is ready.
+                        </p>
                     </div>
                     <div className="status-pill">
                         {loadingCommits ? 'Syncing commits' : `${activeCommits.length} commits ready`}
                     </div>
                 </header>
 
+                <div className="release-steps brutal-card" aria-label="Release generation steps">
+                    <div className="step is-complete"><span>1</span>Repo connected</div>
+                    <div className="step is-active"><span>2</span>Select range</div>
+                    <div className={`step ${changelog ? 'is-complete' : ''}`}><span>3</span>Draft notes</div>
+                    <div className={`step ${published ? 'is-complete' : ''}`}><span>4</span>Publish</div>
+                </div>
+
                 <div className="workspace-grid">
-                    <section className="tool-panel">
+                    <section className="tool-panel brutal-card">
+                        <div className="panel-heading stacked">
+                            <div>
+                                <h2>Release range</h2>
+                                <p>Choose how far back the changelog should read.</p>
+                            </div>
+                        </div>
+
                         <div className="field-group">
                             <label htmlFor="base-tag">Generate changelog since</label>
                             <select
@@ -130,17 +148,17 @@ export default function RepoClient({ commits, releases, owner, repo, token }) {
                                 disabled={loading || loadingCommits || activeCommits.length === 0}
                                 className="button button-primary full-width"
                             >
-                                {loading ? 'Generating...' : 'Generate changelog ->'}
+                                {loading ? 'Writing draft...' : 'Generate changelog ->'}
                             </button>
                         )}
 
                         {error && <p className="error-message">{error}</p>}
                     </section>
 
-                    <section className="commit-panel">
+                    <section className="commit-panel brutal-card">
                         <div className="panel-heading">
                             <div>
-                                <h2>Recent commits</h2>
+                                <h2>Change set</h2>
                                 <p>{loadingCommits ? 'Loading commits...' : `${activeCommits.length} selected for generation`}</p>
                             </div>
                         </div>
@@ -168,11 +186,11 @@ export default function RepoClient({ commits, releases, owner, repo, token }) {
                 </div>
 
                 {changelog && !published && (
-                    <section className="editor-panel">
+                    <section className="editor-panel brutal-card">
                         <div className="panel-heading editor-heading">
                             <div>
-                                <h2>Generated changelog</h2>
-                                <p>Review the draft, make edits, then publish it as a release.</p>
+                                <h2>Release draft</h2>
+                                <p>Keep the language user-facing, then publish it as a GitHub release.</p>
                             </div>
                             <button
                                 onClick={generateChangelog}
@@ -202,7 +220,7 @@ export default function RepoClient({ commits, releases, owner, repo, token }) {
                                 disabled={publishing || !tagName}
                                 className="button button-success"
                             >
-                                {publishing ? 'Publishing...' : 'Publish to GitHub ->'}
+                                {publishing ? 'Publishing...' : 'Publish release ->'}
                             </button>
                         </div>
                         <p className="helper-text">
@@ -212,7 +230,7 @@ export default function RepoClient({ commits, releases, owner, repo, token }) {
                 )}
 
                 {published && (
-                    <section className="success-panel">
+                    <section className="success-panel brutal-card">
                         <div className="success-icon">OK</div>
                         <h2>Release published</h2>
                         <p>Your changelog is now live on GitHub.</p>

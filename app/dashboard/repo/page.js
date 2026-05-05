@@ -28,20 +28,6 @@ async function getReleases(token, owner, repo) {
     return res.json()
 }
 
-async function getCommitsSince(token, owner, repo, baseTag) {
-    const res = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/compare/${baseTag}...HEAD`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                Accept: 'application/vnd.github+json',
-            },
-        }
-    )
-    const data = await res.json()
-    return data.commits || []
-}
-
 export default async function RepoPage({ searchParams }) {
     const cookieStore = await cookies()
     const token = cookieStore.get('github_token')?.value
@@ -63,7 +49,6 @@ export default async function RepoPage({ searchParams }) {
             releases={releases}
             owner={owner}
             repo={repo}
-            token={token}
         />
     )
 }

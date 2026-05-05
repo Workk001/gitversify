@@ -38,6 +38,7 @@ export default async function Dashboard() {
                         <span className="brand-mark">G</span>
                         GitVersify
                     </a>
+                    <div className="nav-coordinates">CONNECTED WORKSPACE</div>
 
                     <div className="user-pill">
                         {/* GitHub avatars are already optimized and sized by GitHub. */}
@@ -54,12 +55,25 @@ export default async function Dashboard() {
                     </div>
                 </header>
 
-                <div className="section-heading">
-                    <p className="eyebrow">Connected workspace</p>
-                    <h1>Your repositories</h1>
-                    <p className="section-copy">
-                        Pick a repository to generate release notes from its recent commits.
-                    </p>
+                <div className="dashboard-intro">
+                    <div className="section-heading">
+                        <p className="eyebrow">Pick the source of truth</p>
+                        <h1>Choose the repository. The release story starts there.</h1>
+                        <p className="section-copy">
+                            Start with a repository. GitVersify will read recent commits,
+                            compare them against your releases, and prepare the next changelog.
+                        </p>
+                    </div>
+
+                    <div className="workflow-card brutal-card" aria-label="Release workflow">
+                        <p className="workflow-label">Release machine</p>
+                        <ol>
+                            <li><span>1</span>Repository</li>
+                            <li><span>2</span>Release range</li>
+                            <li><span>3</span>Changelog draft</li>
+                            <li><span>4</span>GitHub release</li>
+                        </ol>
+                    </div>
                 </div>
 
                 <div className="repo-list">
@@ -75,7 +89,7 @@ export default async function Dashboard() {
                                     {repo.description || 'No description provided'}
                                 </div>
                             </div>
-                            <span className="row-arrow">-&gt;</span>
+                            <span className="repo-action">Prepare release</span>
                         </a>
                     ))}
                     {repos.length === 0 && (
