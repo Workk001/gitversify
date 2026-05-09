@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TrackedLink from "./TrackedLink";
 
 const flowSteps = [
   "Connect GitHub",
@@ -20,9 +21,14 @@ export default function Home() {
           <a href="#before-after">Before / after</a>
           <a href="#how-it-works">How it works</a>
         </div>
-        <a className="nav-link" href="/api/auth/github">
+        <TrackedLink
+          className="nav-link"
+          href="/api/auth/github"
+          event="github_connect_clicked"
+          properties={{ location: "nav" }}
+        >
           Connect GitHub
-        </a>
+        </TrackedLink>
       </nav>
 
       <section className="shell hero simple-hero">
@@ -35,10 +41,15 @@ export default function Home() {
           </p>
 
           <div className="hero-actions">
-            <a className="button button-primary" href="/api/auth/github">
+            <TrackedLink
+              className="button button-primary"
+              href="/api/auth/github"
+              event="github_connect_clicked"
+              properties={{ location: "hero" }}
+            >
               <span>Start with GitHub</span>
               <span className="button-mark">-&gt;</span>
-            </a>
+            </TrackedLink>
             <span className="microcopy">No repo cloning. OAuth access only.</span>
           </div>
         </div>
@@ -94,10 +105,15 @@ export default function Home() {
 
       <section className="shell action-section reveal-block">
         <h2>Ready to turn your next commit range into a release?</h2>
-        <a className="button button-primary" href="/api/auth/github">
+        <TrackedLink
+          className="button button-primary"
+          href="/api/auth/github"
+          event="github_connect_clicked"
+          properties={{ location: "cta" }}
+        >
           <span>Connect GitHub</span>
           <span className="button-mark">-&gt;</span>
-        </a>
+        </TrackedLink>
       </section>
 
       <footer className="shell footer">
@@ -106,7 +122,13 @@ export default function Home() {
           GitVersify
         </Link>
         <div className="footer-links">
-          <a href="/api/auth/github">Connect GitHub</a>
+          <TrackedLink
+            href="/api/auth/github"
+            event="github_connect_clicked"
+            properties={{ location: "footer" }}
+          >
+            Connect GitHub
+          </TrackedLink>
           <a href="mailto:support@gitversify.dev">Support</a>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

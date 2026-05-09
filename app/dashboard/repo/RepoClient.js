@@ -1,5 +1,6 @@
 'use client'
 
+import { track } from '@vercel/analytics'
 import { useEffect, useRef, useState } from 'react'
 
 export default function RepoClient({ commits, releases, owner, repo }) {
@@ -31,6 +32,10 @@ export default function RepoClient({ commits, releases, owner, repo }) {
     }, [changelog, published])
 
     async function handleBaseTagChange(newTag) {
+        track('release_range_changed', {
+            range: newTag ? 'since_tag' : 'all_commits',
+        })
+
         setBaseTag(newTag)
         setChangelog(null)
         setPublished(null)
@@ -50,18 +55,25 @@ export default function RepoClient({ commits, releases, owner, repo }) {
             if (!res.ok || data.error) {
                 setActiveCommits([])
                 setError(data.error || 'Could not fetch commits for that tag.')
+                track('release_range_load_failed')
                 return
             }
 
             setActiveCommits(data.commits)
         } catch (e) {
             setError('Could not fetch commits for that tag.')
+            track('release_range_load_failed')
         } finally {
             setLoadingCommits(false)
         }
     }
 
     async function generateChangelog() {
+        track(changelog ? 'changelog_regenerate_clicked' : 'changelog_generate_clicked', {
+            commitCount: activeCommits.length,
+            range: baseTag ? 'since_tag' : 'all_commits',
+        })
+
         setLoading(true)
         setError(null)
         setPublished(null)
@@ -83,13 +95,25 @@ export default function RepoClient({ commits, releases, owner, repo }) {
 
             if (!res.ok || data.error) {
                 setError(data.error || 'Could not generate the changelog.')
+                track('changelog_generate_failed', {
+                    commitCount: activeCommits.length,
+                    range: baseTag ? 'since_tag' : 'all_commits',
+                })
                 return
             }
 
             setChangelog(data.changelog)
             setEditedChangelog(data.changelog)
+            track(changelog ? 'changelog_regenerated' : 'changelog_generated', {
+                commitCount: activeCommits.length,
+                range: baseTag ? 'since_tag' : 'all_commits',
+            })
         } catch (err) {
             setError('Something went wrong generating. Try again.')
+            track('changelog_generate_failed', {
+                commitCount: activeCommits.length,
+                range: baseTag ? 'since_tag' : 'all_commits',
+            })
         } finally {
             setLoading(false)
         }
@@ -99,6 +123,12 @@ export default function RepoClient({ commits, releases, owner, repo }) {
         setPublishing(true)
         setError(null)
         const cleanTagName = tagName.trim()
+        const tagType = cleanTagName.startsWith('v') ? 'version_prefixed' : 'custom'
+
+        track('release_publish_clicked', {
+            tagType,
+            hasEditedDraft: editedChangelog !== changelog,
+        })
 
         try {
             const res = await fetch('/api/publish', {
@@ -111,11 +141,14 @@ export default function RepoClient({ commits, releases, owner, repo }) {
 
             if (data.error) {
                 setError(`GitHub error: ${data.error}`)
+                track('release_publish_failed', { tagType })
             } else {
                 setPublished(data.url)
+                track('release_published', { tagType })
             }
         } catch (err) {
             setError('Something went wrong publishing. Try again.')
+            track('release_publish_failed', { tagType })
         } finally {
             setPublishing(false)
         }

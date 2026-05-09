@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import TrackedLink from '../TrackedLink'
 
 async function getGithubUser(token) {
     const res = await fetch('https://api.github.com/user', {
@@ -78,10 +79,15 @@ export default async function Dashboard() {
 
                 <div className="repo-list">
                     {repos.map(repo => (
-                        <a
+                        <TrackedLink
                             key={repo.id}
                             href={`/dashboard/repo?owner=${repo.owner.login}&repo=${repo.name}`}
                             className="repo-row"
+                            event="repo_selected"
+                            properties={{
+                                visibility: repo.private ? 'private' : 'public',
+                                hasDescription: Boolean(repo.description),
+                            }}
                         >
                             <div>
                                 <div className="repo-title">{repo.name}</div>
@@ -90,7 +96,7 @@ export default async function Dashboard() {
                                 </div>
                             </div>
                             <span className="repo-action">Prepare release</span>
-                        </a>
+                        </TrackedLink>
                     ))}
                     {repos.length === 0 && (
                         <div className="empty-state">
